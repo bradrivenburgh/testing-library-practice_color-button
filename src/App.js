@@ -23,7 +23,7 @@ function App() {
       </button>
       <input
         type='checkbox'
-        checked={disabled}
+        aria-checked={disabled}
         onChange={(e) => setDisabled(e.target.checked)}
       />
     </div>
