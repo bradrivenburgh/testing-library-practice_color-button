@@ -16,7 +16,10 @@ function App() {
         alignItems: "center",
       }}>
       <button
-        style={{ backgroundColor: buttonColor, color: "white" }}
+        style={{
+          backgroundColor: disabled ? "gray" : buttonColor,
+          color: "white",
+        }}
         disabled={disabled}
         onClick={() => setButtonColor(newButtonColor)}>
         Change to {newButtonColor}

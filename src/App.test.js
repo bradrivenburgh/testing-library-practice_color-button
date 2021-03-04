@@ -24,7 +24,7 @@ test("check checkbox and button initial state", () => {
   render(<App />);
 
   const colorButton = screen.getByRole("button", { name: "Change to blue" });
-  const checkbox = screen.getByRole('checkbox');
+  const checkbox = screen.getByRole("checkbox");
 
   // check that checkbox starts out unchecked
   expect(checkbox).not.toBeChecked();
@@ -36,16 +36,40 @@ test("checkbox disables button when checked", () => {
   render(<App />);
   const colorButton = screen.getByRole("button", { name: "Change to blue" });
   //const checkbox = screen.getByLabelText('disable');
-  const checkbox = screen.getByRole('checkbox', { name: 'Disable button' })
+  const checkbox = screen.getByRole("checkbox", { name: "Disable button" });
   // Disable button with checkbox
   fireEvent.click(checkbox);
   expect(checkbox).toBeChecked();
   expect(colorButton).toBeDisabled();
 
   // Enable button with checkbox
-  fireEvent.click(checkbox); 
+  fireEvent.click(checkbox);
   expect(checkbox).not.toBeChecked();
   expect(colorButton).toBeEnabled();
 });
 
+test("disabled button turns gray; reverts back to red", () => {
+  render(<App />);
+  const colorButton = screen.getByRole("button", { name: "Change to blue" });
+  const checkbox = screen.getByRole("checkbox", { name: "Disable button" });
 
+  // Disable button and check if it is gray
+  fireEvent.click(checkbox);
+  expect(colorButton).toHaveStyle({ backgroundColor: "gray" });
+  fireEvent.click(checkbox);
+  //Enable button and check that the color is red
+  expect(colorButton).toHaveStyle({ backgroundColor: "red" });
+});
+
+test("disabled button is gray; reverts to blue", () => {
+  render(<App />);
+  const colorButton = screen.getByRole("button", { name: "Change to blue" });
+  const checkbox = screen.getByRole("checkbox", { name: "Disable button" });
+
+  // Change the button color to blue; disable and check if it is gray
+  fireEvent.click(colorButton);
+  fireEvent.click(checkbox);
+  expect(colorButton).toHaveStyle({ backgroundColor: "gray" });
+  fireEvent.click(checkbox);
+  expect(colorButton).toHaveStyle({ backgroundColor: "blue" });
+});
